@@ -54,12 +54,12 @@ class WCTBTradingModel(TradingModel):
 
 
 class PredictionBasedTradingModel(TradingModel):
-    def __init__(self, mu, sigma, a, alpha, n_pred):
+    def __init__(self, mu, sigma, a, percentile, n_pred):
         super().__init__()
         self.mu = mu
         self.sigma = sigma
         self.a = a
-        self.alpha = alpha
+        self.percentile = percentile
         self.n_pred = n_pred
 
     def predict(self, p_prev):
@@ -77,7 +77,7 @@ class PredictionBasedTradingModel(TradingModel):
 
         p_pred = self.predict(p_prev)
         # p_pred_mean = p_pred.mean(axis=1)
-        percentile = 0.98
+        percentile = self.percentile
         p_pred_hat = np.percentile(p_pred, 100 * percentile, axis=1)
 
 
@@ -103,7 +103,7 @@ class PredictionBasedTradingModel(TradingModel):
             i += 1
         # print(np.mean(z))
 
-        print(dollars, i)
+        # print(dollars, i)
         yen += dollars * p_true[-1]
 
         return yen
