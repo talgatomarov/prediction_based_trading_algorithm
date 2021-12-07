@@ -61,7 +61,7 @@ def experiment1():
     plt.title("The amount exchanged yen vs a")
     plt.xscale("logit")
     plt.legend()
-    plt.savefig(os.path.join(root, "output", "experiment2.png"))
+    plt.savefig(os.path.join(root, "output", "experiment1.png"))
     plt.clf()
 
     plt.plot(results["a"], results["optimal_std"], label="optimal")
@@ -73,7 +73,7 @@ def experiment1():
     plt.xscale("logit")
     # plt.xscale("log")
     plt.legend()
-    plt.savefig(os.path.join(root, "output", "experiment2_std.png"))
+    plt.savefig(os.path.join(root, "output", "experiment1_std.png"))
     plt.clf()
 
     results = pd.DataFrame(results)
@@ -87,7 +87,7 @@ def experiment2():
     n_experiments = 500
 
     data = AR1Process(mu, sigma, a)
-    optimal_yen, wctb_yen, pred_yen = [], [], []
+    pred_yen = []
 
     results = {
         "percentile": percentiles,
@@ -119,12 +119,12 @@ def experiment2():
     ax[1].set_title("The standard deviation of exchanged yen vs percentile")
     ax[1].set_xscale("logit")
 
-    plt.savefig(os.path.join(root, "output", "experiment3.png"))
+    plt.savefig(os.path.join(root, "output", "experiment2.png"))
     plt.clf()
 
     results = pd.DataFrame(results)
     results.to_csv(os.path.join(
-        root, "output", "experiment3.csv"), index=False)
+        root, "output", "experiment2.csv"), index=False)
 
 
 def main():
