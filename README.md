@@ -1,4 +1,4 @@
-# prediction_based_trading_algorithm
+# Prediction-based One-wat Trading Algorithm.
 It is the accompanying code for the CMPUT 675 Final Project: One-way Trading Online Algorithms.
 
 ## Dependency installation
