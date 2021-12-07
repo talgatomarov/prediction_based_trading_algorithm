@@ -24,8 +24,7 @@ class WCTBTradingModel(TradingModel):
         self.c = self.calculate_c(self.m, self.M)
 
     def calculate_c(self, m, M):
-        def f(c): 
-            # print(c,(M - m) / (m * (c - 1)), self.m, self.M)
+        def f(c):
             return np.log((M - m) / (m * (c - 1))) - c
         c = bisect(f, 1 + 1e-6, 100, maxiter=10000, )
 
@@ -76,34 +75,20 @@ class PredictionBasedTradingModel(TradingModel):
         p_true = p[1:]
 
         p_pred = self.predict(p_prev)
-        # p_pred_mean = p_pred.mean(axis=1)
         percentile = self.percentile
-        p_pred_hat = np.percentile(p_pred, 100 * percentile, axis=1)
-
-
-        # x = (p_true > p_pred_mean) * \
-        #     np.tanh(self.alpha * (p_true - p_pred_mean) / p_pred_mean)
 
         T = len(p)
         i = 0
-        # z = []
         while dollars > 0.0 and i < len(p_true):
             rank = percentile_rank(p_pred[i], p_true[i])
             if rank > percentile:
-                # z.append(percentile_rank(p_pred[i], p_true[i]))
-                # x_i = np.tanh((p_true[i] - p_pred_mean[i]) / p_pred_mean[i])
-                x_i = min((rank - percentile) / (1 - percentile), 1 / ((1 - percentile) * T))
-                # x_i = (percentile_rank(p_pred[i], p_true[i]) - percentile) / (1 - percentile)
-                # print(x_i)
+                x_i = min((rank - percentile) / (1 - percentile),
+                          1 / ((1 - percentile) * T))
                 dollars_to_exchange = min(x_i, dollars)
                 yen += dollars_to_exchange * p_true[i]
                 dollars -= dollars_to_exchange
-                # yen += x_i * p_true[i]
-                # dollars -= x_i
             i += 1
-        # print(np.mean(z))
 
-        # print(dollars, i)
         yen += dollars * p_true[-1]
 
         return yen
