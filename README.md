@@ -17,7 +17,7 @@ All steps assume that you are in the current directory
 To execute the first experiment described in the paper run
 `python3 experiments.py --run 1`
 
-To execute the first experiment described in the paper run
+To execute the second experiment described in the paper run
 `python3 experiments.py --run 2`
 
 The results of the experiments will be saved in the output folder.
